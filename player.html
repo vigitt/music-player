@@ -10,15 +10,24 @@
     </audio>
 
     <script>
-        // Get the stream URL from the link
-        const urlParams = new URLSearchParams(window.location.search);
-        const streamURL = urlParams.get('url');
+        window.onload = function() {
+            // Get the stream URL from the link
+            const urlParams = new URLSearchParams(window.location.search);
+            const streamURL = urlParams.get('url');
 
-        if (streamURL) {
-            document.getElementById('audioSource').src = streamURL;
-            document.getElementById('audioPlayer').load();
-            document.getElementById('audioPlayer').play();
-        }
+            if (streamURL) {
+                document.getElementById('audioSource').src = streamURL;
+                let player = document.getElementById('audioPlayer');
+                player.load();
+
+                // Try to autoplay with user interaction
+                player.play().catch(() => {
+                    document.body.addEventListener('click', () => {
+                        player.play();
+                    }, { once: true });
+                });
+            }
+        };
     </script>
 </body>
 </html>
