@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Stream Player</title>
+</head>
+<body>
+    <audio id="audioPlayer" controls autoplay>
+        <source id="audioSource" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Get the stream URL from the link
+        const urlParams = new URLSearchParams(window.location.search);
+        const streamURL = urlParams.get('url');
+
+        if (streamURL) {
+            document.getElementById('audioSource').src = streamURL;
+            document.getElementById('audioPlayer').load();
+            document.getElementById('audioPlayer').play();
+        }
+    </script>
+</body>
+</html>
