@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Stream Player</title>
+</head>
+<body>
+    <audio id="audioPlayer" controls autoplay>
+        <source id="audioSource" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const streamURL = urlParams.get('url');
+
+            if (streamURL) {
+                const audioPlayer = document.getElementById('audioPlayer');
+                document.getElementById('audioSource').src = streamURL;
+                audioPlayer.load();
+
+                // Try to autoplay
+                audioPlayer.play().catch(() => {
+                    console.log("Autoplay blocked. Waiting for user interaction...");
+                    document.body.addEventListener('click', () => {
+                        audioPlayer.play();
+                    }, { once: true });
+                });
+            }
+        };
+    </script>
+</body>
+</html>
